@@ -57,7 +57,10 @@ def load_state_dict_from_path(path: Union[str, os.PathLike]):
     if 'safetensors' in path:
         state_dict = safetensors.torch.load_file(path)
     else:
-        state_dict = torch.load(path, map_location="cpu")
+        state_dict = torch.load(path, weights_only=False)
+        state_dict = {
+            k.replace("module.", "net."): v for k, v in state_dict["model_state_dict"].items()
+        }
     return state_dict
 
 def replace_extension(path, new_extension):

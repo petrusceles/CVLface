@@ -20,9 +20,9 @@ class IResNetModelDsc(BaseModel):
 
     @classmethod
     def from_config(cls, config):
-        if config.name == "ir50":
+        if config.name == "ir50dsc":
             net = IR_50(input_size=(112, 112), output_dim=config.output_dim)
-        elif config.name == "ir18":
+        elif config.name == "ir18dsc":
             net = IR_18(input_size=(112, 112), output_dim=config.output_dim)
         else:
             raise NotImplementedError
