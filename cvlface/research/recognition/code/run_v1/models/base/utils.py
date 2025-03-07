@@ -10,13 +10,16 @@ from omegaconf import DictConfig, OmegaConf
 
 def get_parameter_device(parameter: torch.nn.Module):
     try:
-        parameters_and_buffers = itertools.chain(parameter.parameters(), parameter.buffers())
+        parameters_and_buffers = itertools.chain(
+            parameter.parameters(), parameter.buffers()
+        )
         return next(parameters_and_buffers).device
     except StopIteration:
         # For torch.nn.DataParallel compatibility in PyTorch 1.5
         def find_tensor_attributes(module: torch.nn.Module) -> List[Tuple[str, Tensor]]:
             tuples = [(k, v) for k, v in module.__dict__.items() if torch.is_tensor(v)]
             return tuples
+
         gen = parameter._named_members(get_members_fn=find_tensor_attributes)
         first_tuple = next(gen)
         return first_tuple[1].device
@@ -48,29 +51,31 @@ def get_parent_directory(save_path: Union[str, os.PathLike]) -> Path:
     path_obj = Path(save_path)
     return path_obj.parent
 
+
 def get_base_name(save_path: Union[str, os.PathLike]) -> str:
     path_obj = Path(save_path)
     return path_obj.name
 
+
 def load_state_dict_from_path(path: Union[str, os.PathLike]):
     # Load a state dict from a path.
-    if 'safetensors' in path:
+    if "safetensors" in path:
         state_dict = safetensors.torch.load_file(path)
     else:
-        state_dict = torch.load(path, weights_only=False)
-        state_dict = {
-            k.replace("module.", "net."): v for k, v in state_dict["model_state_dict"].items()
-        }
+        state_dict = torch.load(path)
     return state_dict
 
+
 def replace_extension(path, new_extension):
-    if not new_extension.startswith('.'):
-        new_extension = '.' + new_extension
+    if not new_extension.startswith("."):
+        new_extension = "." + new_extension
     return os.path.splitext(path)[0] + new_extension
 
+
 def make_config_path(save_path):
-    config_path = replace_extension(save_path, '.yaml')
+    config_path = replace_extension(save_path, ".yaml")
     return config_path
+
 
 def save_config(config, config_path):
     assert isinstance(config, dict) or isinstance(config, DictConfig)
@@ -88,7 +93,7 @@ def save_state_dict_and_config(state_dict, config, save_path):
     save_config(config, config_path)
 
     # Save the model
-    if 'safetensors' in save_path:
+    if "safetensors" in save_path:
         safetensors.torch.save_file(state_dict, save_path, metadata={"format": "pt"})
     else:
         torch.save(state_dict, save_path)
