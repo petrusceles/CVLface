@@ -17,7 +17,10 @@ def get_model(model_config, task=''):
     elif '/iresnet/' in model_config.yaml_path:
         from .iresnet import load_model as load_iresnet_model
         model = load_iresnet_model(model_config)
-        print('Loaded iResNet model')
+    elif '/iresnet_dsc/' in model_config.yaml_path:
+        from .iresnet_dsc import load_model as load_iresnet_dsc_model
+        model = load_iresnet_dsc_model(model_config)
+        print('Loaded iResNet DSC model')
     elif '/iresnet_insightface/' in model_config.yaml_path:
         from .iresnet_insightface import load_model as load_iresnet_insightface_model
         model = load_iresnet_insightface_model(model_config)
