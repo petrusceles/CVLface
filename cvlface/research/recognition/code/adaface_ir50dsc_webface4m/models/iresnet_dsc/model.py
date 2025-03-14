@@ -662,7 +662,7 @@ class BackboneMod(Module):
         norm = torch.norm(x, 2, 1, True)
         output = torch.div(x, norm)
 
-        return output, norm, x
+        return x
 
 
 def IR_18(input_size, output_dim=512):

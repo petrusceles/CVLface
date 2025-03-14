@@ -62,7 +62,8 @@ def load_state_dict_from_path(path: Union[str, os.PathLike]):
     if "safetensors" in path:
         state_dict = safetensors.torch.load_file(path)
     else:
-        state_dict = torch.load(path)
+        ckpt = torch.load(path, weights_only=False)
+        state_dict = {key.replace('module.', 'net.'):val for key,val in ckpt['state_dict'].items()}
     return state_dict
 
 
