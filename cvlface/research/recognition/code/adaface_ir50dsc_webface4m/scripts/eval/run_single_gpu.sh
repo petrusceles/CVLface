@@ -12,3 +12,4 @@
 #python eval.py --num_gpu 1 --eval_config_name full --ckpt_dir ../../../../pretrained_models/recognition/adaface_vit_base_webface4m
 python eval.py --num_gpu 1 --eval_config_name full --ckpt_dir ../../../../pretrained_models/recognition/adaface_vit_base_kprpe_webface4m
 python eval.py --num_gpu 1 --eval_config_name full --ckpt_dir ../../../../pretrained_models/recognition/adaface_vit_base_kprpe_webface12m
+python eval.py --num_gpu 1 --eval_config_name full --ckpt_dir ../../../../pretrained_models/recognition/adaface_ir50dsc_webface4m
