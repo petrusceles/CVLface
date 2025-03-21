@@ -10,7 +10,7 @@ apt install unzip
 
 # Download dataset
 echo "Download datasets"
-cd /root/workspace/Work/CVLface/cvlface/data_root
+cd /root/workspace/CVLface/cvlface/data_root
 python download.py
 unzip -P password -qq "facerec_val.zip" -d .
 
