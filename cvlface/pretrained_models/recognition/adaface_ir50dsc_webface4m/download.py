@@ -3,24 +3,10 @@ import argparse
 
 # List of model URLs
 model_url = [
-    "https://drive.google.com/file/d/1tvEevbSRtvekiZjGf58NCSy-ycI9AA3o/view?usp=drive_link",
-    "https://drive.google.com/file/d/1trNd3WFZTXVpY3s_gBgeKCl3cgvFVtgo/view?usp=drive_link",
-    "https://drive.google.com/file/d/1ibB_oytc3LGiWtwmVoyEQsFjdn-Wf3Cn/view?usp=drive_link",
-    "https://drive.google.com/file/d/1htSk_FpKw70IRemnqI7JzGnSYqp3HLUK/view?usp=drive_link",
-    "https://drive.google.com/file/d/1-DiCcLqSoVDITrB7WzX8RQn-1JYupYA0/view?usp=drive_link",
-    "https://drive.google.com/file/d/16mhhFTUzXS6LffN2srBRuMdO3YivMUCn/view?usp=drive_link",
-    "https://drive.google.com/file/d/19me785-9uzxidncckF12JOjR9vFZsk-X/view?usp=drive_link",
-    "https://drive.google.com/file/d/1mfmPHCg4sKxh3Kf3i53pYDMpaCa80_7C/view?usp=drive_link",
-    "https://drive.google.com/file/d/151OvOujt8v7Bl2AdPAgYE6GvavrqTYzn/view?usp=drive_link",
-    "https://drive.google.com/file/d/1hZ36HAsNcDNEglH_OLILo1ClNlDwUSOH/view?usp=drive_link",
-    "https://drive.google.com/file/d/19arOCGBCUQsZzJ5jbWcDn5qsJlOCLyag/view?usp=drive_link",
-    "https://drive.google.com/file/d/1UNgk8DLzLq6zCMaMXAfPyxXNtBow_Nk_/view?usp=drive_link",
-    "https://drive.google.com/file/d/1Fad8JDsJTKg9QpUByUt4YkNGN-ZftD3U/view?usp=drive_link",
-    "https://drive.google.com/file/d/1oytFnzyNbDap5wvngfva9EtOuhfm6sCP/view?usp=drive_link",
-    "https://drive.google.com/file/d/1TKVRQ5lmFqAMuvBSBumkmU2T8BU-fJ72/view?usp=drive_link",
-    "https://drive.google.com/file/d/1szt556w2guJPcEUtPyNvpBGXxNIUcJuj/view?usp=drive_link",
-    "https://drive.google.com/file/d/1Ck7yi5kDrC_b_69MpOLSoydnw3DGqfyR/view?usp=drive_link",
-    "https://drive.google.com/file/d/1B_5dHvb73l0RqsjE_r-Tpb5M7PxVQKnD/view?usp=drive_link",
+    "https://drive.google.com/file/d/1isk9oDeYzA4OtTgX7xQyDCqp9cC0zN9Y/view?usp=drive_link",
+    "https://drive.google.com/file/d/1D0uvtigY_rjsl0kohXlaExBsLXgYjnxW/view?usp=drive_link",
+    "https://drive.google.com/file/d/1yAMmiY67ydVB6a0mzNBhfptht53UW_bf/view?usp=drive_link",
+    "https://drive.google.com/file/d/1OgGM6OS-28sk_DagvSwJ8JQIjic0WRDn/view?usp=drive_link",
 ]
 
 
