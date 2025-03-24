@@ -15,7 +15,7 @@ python download.py
 unzip -P password -qq "facerec_val.zip" -d .
 
 # Download model
-for i in $(seq 0 17)
+for i in $(seq 0 3)
 do
     echo "Downloading model with index: $i"
     cd /root/workspace/CVLface/cvlface/pretrained_models/recognition/adaface_ir50dsc_webface4m/collections
@@ -29,7 +29,7 @@ done
 
 
 # Evaluate
-for i in $(seq 0 1)
+for i in $(seq 0 3)
 do
     cp "/root/workspace/CVLface/cvlface/pretrained_models/recognition/adaface_ir50dsc_webface4m/collections/model_$i.pt" "/root/workspace/CVLface/cvlface/pretrained_models/recognition/adaface_ir50dsc_webface4m"
 
