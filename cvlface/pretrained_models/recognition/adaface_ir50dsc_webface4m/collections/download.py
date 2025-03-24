@@ -35,7 +35,7 @@ def main():
     try:
         gdown.download(
             model_url[args.index],
-            str(f"model.pt"),
+            str(f"model_{args.index}.pt"),
             quiet=False,
             fuzzy=True,
         )
