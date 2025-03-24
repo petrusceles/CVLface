@@ -654,6 +654,7 @@ class BackboneMod(Module):
         initialize_weights(self.modules())
 
     def forward(self, x):
+        x = x.flip(1)
         x = self.input_layer(x)
 
         for idx, module in enumerate(self.body):
