@@ -330,8 +330,8 @@ class DepthwiseSeparableConvolution(Module):
             Conv2d(
                 in_channel,
                 in_channel * kernels_per_layer,
-                kernel_size=5,
-                padding=2,
+                kernel_size=3,
+                padding=1,
                 groups=in_channel,
                 stride=stride,
                 bias=False,
@@ -599,7 +599,7 @@ class BackboneMod(Module):
         #                               BatchNorm2d(64), PReLU(64))
 
         self.input_layer = DepthwiseSeparableConvolution(
-            in_channel=5, kernels_per_layer=3, out_channel=64
+            in_channel=3, kernels_per_layer=3, out_channel=64
         )
 
         blocks = get_blocks(num_layers)
