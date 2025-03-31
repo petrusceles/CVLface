@@ -599,7 +599,7 @@ class BackboneMod(Module):
         #                               BatchNorm2d(64), PReLU(64))
 
         self.input_layer = DepthwiseSeparableConvolution(
-            in_channel=3, kernels_per_layer=3, out_channel=64
+            in_channel=3, kernels_per_layer=1, out_channel=64
         )
 
         blocks = get_blocks(num_layers)
