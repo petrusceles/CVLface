@@ -389,7 +389,7 @@ class BasicBlockIR(Module):
                     in_channel,
                     in_channel,
                     kernel_size=kernel,
-                    padding=2,
+                    padding=1,
                     groups=in_channel,
                     stride=stride,
                     bias=False,
@@ -481,10 +481,10 @@ def get_blocks(num_layers):
     elif num_layers == 50:
         blocks1 = [
             get_block(
-                in_channel=64, depth=64, num_units=3, extra=True, se=False, kernel=5
+                in_channel=64, depth=64, num_units=3, extra=True, se=False, kernel=3
             ),
             get_block(
-                in_channel=64, depth=128, num_units=4, extra=True, se=False, kernel=5
+                in_channel=64, depth=128, num_units=4, extra=True, se=False, kernel=3
             ),
         ]
         blocks2 = [
