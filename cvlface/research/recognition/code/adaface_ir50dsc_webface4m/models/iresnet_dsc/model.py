@@ -10,6 +10,7 @@ from torch.nn import ReLU, Sigmoid
 from torch.nn import Module
 from torch.nn import PReLU
 from fvcore.nn import flop_count
+import torch.nn.functional as F
 import numpy as np
 
 from collections import namedtuple
@@ -599,7 +600,7 @@ class BackboneMod(Module):
         #                               BatchNorm2d(64), PReLU(64))
 
         self.input_layer = DepthwiseSeparableConvolution(
-            in_channel=3, kernels_per_layer=5, out_channel=64
+            in_channel=3, kernels_per_layer=3, out_channel=64
         )
 
         blocks = get_blocks(num_layers)
