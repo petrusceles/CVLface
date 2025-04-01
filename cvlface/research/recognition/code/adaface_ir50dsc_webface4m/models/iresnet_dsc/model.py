@@ -481,10 +481,10 @@ def get_blocks(num_layers):
     elif num_layers == 50:
         blocks1 = [
             get_block(
-                in_channel=64, depth=64, num_units=3, extra=True, se=False, kernel=3
+                in_channel=64, depth=64, num_units=3, extra=True, se=True, kernel=3
             ),
             get_block(
-                in_channel=64, depth=128, num_units=4, extra=True, se=False, kernel=3
+                in_channel=64, depth=128, num_units=4, extra=True, se=True, kernel=3
             ),
         ]
         blocks2 = [
