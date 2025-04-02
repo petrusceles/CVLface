@@ -7,6 +7,7 @@ model_url = [
     "https://drive.google.com/file/d/1WpM276xjSApl_trdo3W0xZnXIrGurmQI/view?usp=drive_link",
     "https://drive.google.com/file/d/1_6WKDx6w_pTawdJKEvf-ABEeNTJ0hIoe/view?usp=drive_link",
     "https://drive.google.com/file/d/19S-fccnHW0P3Maen1b4zvnzXHZuY7Srx/view?usp=drive_link",
+    "https://drive.google.com/file/d/17Dw5ayzpdaMykfhFQ731PhnYDv54OgSt/view?usp=drive_link",
 ]
 
 
