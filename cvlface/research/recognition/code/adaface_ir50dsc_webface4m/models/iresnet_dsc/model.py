@@ -388,7 +388,7 @@ class BasicBlockIR(Module):
                 BatchNorm2d(in_channel),
                 Conv2d(
                     in_channel,
-                    in_channel,
+                    in_channel * 3,
                     kernel_size=kernel,
                     padding=1,
                     groups=in_channel,
