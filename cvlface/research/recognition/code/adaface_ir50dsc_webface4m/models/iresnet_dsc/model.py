@@ -395,12 +395,12 @@ class BasicBlockIR(Module):
                     stride=stride,
                     bias=False,
                 ),
-                BatchNorm2d(in_channel),
-                PReLU(in_channel),
+                BatchNorm2d(in_channel * 3),
+                PReLU(in_channel * 3),
             )
             self.res_layer_2 = Sequential(
                 # pointwise
-                Conv2d(in_channel, depth, kernel_size=1, bias=False),
+                Conv2d(in_channel * 3, depth, kernel_size=1, bias=False),
                 BatchNorm2d(depth),
             )
 
@@ -600,7 +600,7 @@ class BackboneMod(Module):
         #                               BatchNorm2d(64), PReLU(64))
 
         self.input_layer = DepthwiseSeparableConvolution(
-            in_channel=3, kernels_per_layer=1, out_channel=64
+            in_channel=3, kernels_per_layer=3, out_channel=64
         )
 
         blocks = get_blocks(num_layers)
