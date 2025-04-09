@@ -388,19 +388,19 @@ class BasicBlockIR(Module):
                 BatchNorm2d(in_channel),
                 Conv2d(
                     in_channel,
-                    in_channel,
+                    in_channel * 3,
                     kernel_size=kernel,
                     padding=1,
                     groups=in_channel,
                     stride=stride,
                     bias=False,
                 ),
-                BatchNorm2d(in_channel),
-                PReLU(in_channel),
+                BatchNorm2d(in_channel * 3),
+                PReLU(in_channel * 3),
             )
             self.res_layer_2 = Sequential(
                 # pointwise
-                Conv2d(in_channel, depth, kernel_size=1, bias=False),
+                Conv2d(in_channel * 3, depth, kernel_size=1, bias=False),
                 BatchNorm2d(depth),
             )
 
