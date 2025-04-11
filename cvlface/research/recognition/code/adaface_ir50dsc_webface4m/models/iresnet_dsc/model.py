@@ -624,13 +624,13 @@ class BackboneMod(Module):
         super(BackboneMod, self).__init__()
         assert input_size[0] in [112], "input_size should be [112, 112]"
         assert num_layers in [18, 34, 20, 50], "num_layers should be 18, 34"
-        # self.input_layer = Sequential(
-        #     Conv2d(3, 64, (3, 3), 1, 1, bias=False), BatchNorm2d(64), PReLU(64)
-        # )
-
-        self.input_layer = DepthwiseSeparableConvolution(
-            in_channel=3, kernels_per_layer=1, out_channel=64
+        self.input_layer = Sequential(
+            Conv2d(3, 64, (3, 3), 1, 1, bias=False), BatchNorm2d(64), PReLU(64)
         )
+
+        # self.input_layer = DepthwiseSeparableConvolution(
+        #     in_channel=3, kernels_per_layer=1, out_channel=64
+        # )
 
         blocks = get_blocks(num_layers)
         unit_module = BasicBlockIR
