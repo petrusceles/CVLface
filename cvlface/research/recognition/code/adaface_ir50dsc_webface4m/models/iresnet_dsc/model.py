@@ -366,6 +366,7 @@ class BasicBlockIR(Module):
         se=False,
         sk=False,
         kernel=3,
+        kernel_per_layer=1,
     ):
         super(BasicBlockIR, self).__init__()
 
@@ -388,19 +389,19 @@ class BasicBlockIR(Module):
                 BatchNorm2d(in_channel),
                 Conv2d(
                     in_channel,
-                    in_channel,
+                    in_channel * kernel_per_layer,
                     kernel_size=kernel,
                     padding=1,
                     groups=in_channel,
                     stride=stride,
                     bias=False,
                 ),
-                BatchNorm2d(in_channel),
-                PReLU(in_channel),
+                BatchNorm2d(in_channel * kernel_per_layer),
+                PReLU(in_channel * kernel_per_layer),
             )
             self.res_layer_2 = Sequential(
                 # pointwise
-                Conv2d(in_channel, depth, kernel_size=1, bias=False),
+                Conv2d(in_channel * kernel_per_layer, depth, kernel_size=1, bias=False),
                 BatchNorm2d(depth),
             )
 
@@ -433,7 +434,17 @@ class BasicBlockIR(Module):
 class Bottleneck(
     namedtuple(
         "Block",
-        ["in_channel", "depth", "stride", "extra", "multi", "se", "sk", "kernel"],
+        [
+            "in_channel",
+            "depth",
+            "stride",
+            "extra",
+            "multi",
+            "se",
+            "sk",
+            "kernel",
+            "kernel_per_layer",
+        ],
     )
 ):
     """A named tuple describing a ResNet block."""
@@ -449,9 +460,14 @@ def get_block(
     se=False,
     sk=False,
     kernel=3,
+    kernel_per_layer=1,
 ):
-    return [Bottleneck(in_channel, depth, stride, extra, multi, se, False, kernel)] + [
-        Bottleneck(depth, depth, 1, extra, False, False, sk, kernel)
+    return [
+        Bottleneck(
+            in_channel, depth, stride, extra, multi, se, False, kernel, kernel_per_layer
+        )
+    ] + [
+        Bottleneck(depth, depth, 1, extra, False, False, sk, kernel, kernel_per_layer)
         for i in range(num_units - 1)
     ]
 
@@ -482,10 +498,22 @@ def get_blocks(num_layers):
     elif num_layers == 50:
         blocks1 = [
             get_block(
-                in_channel=64, depth=64, num_units=3, extra=True, se=False, kernel=3
+                in_channel=64,
+                depth=64,
+                num_units=3,
+                extra=True,
+                se=False,
+                kernel=3,
+                kernel_per_layer=3,
             ),
             get_block(
-                in_channel=64, depth=128, num_units=4, extra=True, se=False, kernel=3
+                in_channel=64,
+                depth=128,
+                num_units=4,
+                extra=True,
+                se=False,
+                kernel=3,
+                kernel_per_layer=1,
             ),
         ]
         blocks2 = [
@@ -631,6 +659,7 @@ class BackboneMod(Module):
                         bottleneck.se,
                         bottleneck.sk,
                         bottleneck.kernel,
+                        bottleneck.kernel_per_layer,
                     )
                 )
                 last_ch = bottleneck.depth
@@ -647,6 +676,7 @@ class BackboneMod(Module):
                         bottleneck.se,
                         bottleneck.sk,
                         bottleneck.kernel,
+                        bottleneck.kernel_per_layer,
                     )
                 )
                 last_ch = bottleneck.depth
