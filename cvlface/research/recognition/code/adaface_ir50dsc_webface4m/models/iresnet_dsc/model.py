@@ -379,8 +379,6 @@ class BasicBlockIR(Module):
                 BatchNorm2d(depth),
             )
 
-        self.prelu = PReLU(depth)
-
         self.se = se
         self.sk = sk
         if self.is_extra:
@@ -427,7 +425,6 @@ class BasicBlockIR(Module):
         if self.se:
             res = self.se_layer(res)
         result = res + shortcut
-        result = self.prelu(result)
         return result
 
 
@@ -504,7 +501,7 @@ def get_blocks(num_layers):
                 extra=True,
                 se=False,
                 kernel=3,
-                kernel_per_layer=3,
+                kernel_per_layer=1,
             ),
             get_block(
                 in_channel=64,
