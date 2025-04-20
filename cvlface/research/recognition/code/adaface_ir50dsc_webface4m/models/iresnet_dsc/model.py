@@ -568,7 +568,7 @@ class ModifiedGDC(nn.Module):
             self.conv_dw = nn.Conv2d(
                 in_chs,
                 in_chs,
-                kernel_size=(image_size // 32 + 1),
+                kernel_size=(image_size // 32 + 4),
                 groups=in_chs,
                 bias=False,
             )
@@ -633,12 +633,12 @@ class BackboneMod(Module):
         unit_module = BasicBlockIR
         output_channel = 512
 
-        self.output_layer = Sequential(
-            BatchNorm2d(output_channel),
-            Flatten(),
-            Linear(output_channel * 7 * 7, 512),
-            BatchNorm1d(512, affine=False),
-        )
+        # self.output_layer = Sequential(
+        #     BatchNorm2d(output_channel),
+        #     Flatten(),
+        #     Linear(output_channel * 7 * 7, 512),
+        #     BatchNorm1d(512, affine=False),
+        # )
 
         modules = []
         last_ch = 0
@@ -676,6 +676,8 @@ class BackboneMod(Module):
                     )
                 )
                 last_ch = bottleneck.depth
+
+        self.output_layer = ModifiedGDC(input_size[0], last_ch, 0.2, output_channel)
 
         self.body = Sequential(*modules)
 
