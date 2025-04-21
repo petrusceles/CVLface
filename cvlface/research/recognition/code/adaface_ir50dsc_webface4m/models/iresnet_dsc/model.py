@@ -625,20 +625,17 @@ class BackboneMod(Module):
             Conv2d(3, 64, (3, 3), 1, 1, bias=False), BatchNorm2d(64), PReLU(64)
         )
 
-        # self.input_layer = DepthwiseSeparableConvolution(
-        #     in_channel=3, kernels_per_layer=1, out_channel=64
-        # )
-
         blocks = get_blocks(num_layers)
         unit_module = BasicBlockIR
         output_channel = 512
 
-        # self.output_layer = Sequential(
-        #     BatchNorm2d(output_channel),
-        #     Flatten(),
-        #     Linear(output_channel * 7 * 7, 512),
-        #     BatchNorm1d(512, affine=False),
-        # )
+        self.output_layer = Sequential(
+            BatchNorm2d(output_channel),
+            Dropout(0.4),
+            Flatten(),
+            Linear(output_channel * 7 * 7, 512),
+            BatchNorm1d(512, affine=False),
+        )
 
         modules = []
         last_ch = 0
@@ -677,7 +674,7 @@ class BackboneMod(Module):
                 )
                 last_ch = bottleneck.depth
 
-        self.output_layer = ModifiedGDC(input_size[0], last_ch, 0.2, output_channel)
+        # self.output_layer = ModifiedGDC(input_size[0], last_ch, 0.2, output_channel)
 
         self.body = Sequential(*modules)
 
