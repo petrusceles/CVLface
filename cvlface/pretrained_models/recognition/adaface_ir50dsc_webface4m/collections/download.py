@@ -3,9 +3,9 @@ import argparse
 
 # List of model URLs
 model_url = [
-    "https://drive.google.com/file/d/1hSXoE4EH69fywpKOXHROCGGfTg6-dvXD/view?usp=drive_link",
-    "https://drive.google.com/file/d/1CJL6rMJ-KXyISuvcdwHaLqGXqoTdIYB0/view?usp=drive_link",
-    "https://drive.google.com/file/d/1JqvGIDTSrbct1JEqMfJPUgQr6wfUEusC/view?usp=drive_link",
+    "https://drive.google.com/file/d/1kjj42GcW8IEim_s3C6sMPHkYWX1gjsA5/view?usp=drive_link",
+    "https://drive.google.com/file/d/1B38YEXynRrP0pipMLhbrDr2toKIYZXaB/view?usp=drive_link",
+    "https://drive.google.com/file/d/1_jcSr-HGd3mix0OTFngtP8K6PEGZdnLa/view?usp=drive_link",
 ]
 
 

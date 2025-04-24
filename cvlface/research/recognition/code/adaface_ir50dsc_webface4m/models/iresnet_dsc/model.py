@@ -415,8 +415,6 @@ class BasicBlockIR(Module):
                 BatchNorm2d(depth),
             )
 
-        if self.is_extra:
-            self.prelu = PReLU(depth)
         if self.se:
             self.se_layer = SqueezeExcite(in_chs=depth)
 
@@ -425,8 +423,6 @@ class BasicBlockIR(Module):
         res = self.res_layer_1(x)
         res = self.res_layer_2(res)
         result = res + shortcut
-        if self.is_extra:
-            result = self.prelu(result)
         if self.se:
             res = self.se_layer(res)
         return result
