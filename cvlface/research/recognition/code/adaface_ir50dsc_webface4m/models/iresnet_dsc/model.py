@@ -518,7 +518,7 @@ def get_blocks(num_layers):
             ),
         ]
         blocks2 = [
-            get_block(in_channel=128, depth=256, num_units=14, extra=False, se=True),
+            get_block(in_channel=128, depth=256, num_units=14, extra=False, se=False),
             get_block(in_channel=256, depth=512, num_units=3, extra=False, se=False),
         ]
     elif num_layers == 20:
