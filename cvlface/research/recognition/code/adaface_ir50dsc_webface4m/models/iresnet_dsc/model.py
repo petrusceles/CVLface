@@ -635,7 +635,6 @@ class BackboneMod(Module):
 
         self.output_layer = Sequential(
             BatchNorm2d(output_channel),
-            Dropout(0.2),
             Flatten(),
             Linear(output_channel * 7 * 7, 512),
             BatchNorm1d(512, affine=False),

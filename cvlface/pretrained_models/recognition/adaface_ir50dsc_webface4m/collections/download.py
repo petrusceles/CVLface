@@ -3,11 +3,11 @@ import argparse
 
 # List of model URLs
 model_url = [
-    "https://drive.google.com/file/d/1P0m2eKZ2uk2f2iy4WCyvgtzJwxSObix3/view?usp=drive_link",
-    "https://drive.google.com/file/d/1fyQvlBngU-OvjwRRIf7qD5Vg0RePUYDA/view?usp=drive_link",
-    "https://drive.google.com/file/d/1B9u9LLfLF7_dM18-jvjqSjlH11PmxU-g/view?usp=drive_link",
-    "https://drive.google.com/file/d/1_gFfK5HfaVgALL24QpOIMZVLuZzy3Hq8/view?usp=drive_link",
+    "https://drive.google.com/file/d/1jBiuDO6bcS2i7jh0tp8rER0dCRrL6uT5/view?usp=drive_link",
+    "https://drive.google.com/file/d/1LDlnEeu63VvPgGHc72wpwGpUnF4Y7k7_/view?usp=drive_link",
+    "https://drive.google.com/file/d/12iol8v9l-and7X1qL6fsELbRR_qiv1Mn/view?usp=drive_link",
 ]
+
 
 def main():
     # Create the parser
