@@ -468,7 +468,17 @@ def get_block(
             in_channel, depth, stride, extra, multi, se, False, kernel, kernel_per_layer
         )
     ] + [
-        Bottleneck(depth, depth, 1, extra, False, False, sk, kernel, kernel_per_layer)
+        Bottleneck(
+            depth,
+            depth,
+            1,
+            extra,
+            False,
+            False,
+            sk,
+            kernel,
+            int(kernel_per_layer / stride),
+        )
         for i in range(num_units - 1)
     ]
 
