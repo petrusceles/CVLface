@@ -477,7 +477,7 @@ def get_block(
             False,
             sk,
             kernel,
-            int(kernel_per_layer / stride),
+            kernel_per_layer,
         )
         for i in range(num_units - 1)
     ]
