@@ -513,7 +513,7 @@ def get_blocks(num_layers):
                 depth=64,
                 num_units=3,
                 extra=True,
-                se=False,
+                se=True,
                 kernel=3,
                 kernel_per_layer=1,
             ),
@@ -522,13 +522,13 @@ def get_blocks(num_layers):
                 depth=128,
                 num_units=4,
                 extra=True,
-                se=False,
+                se=True,
                 kernel=3,
                 kernel_per_layer=1,
             ),
         ]
         blocks2 = [
-            get_block(in_channel=128, depth=256, num_units=14, extra=False, se=False),
+            get_block(in_channel=128, depth=256, num_units=14, extra=False, se=True),
             get_block(in_channel=256, depth=512, num_units=3, extra=False, se=False),
         ]
     elif num_layers == 20:
@@ -643,9 +643,12 @@ class BackboneMod(Module):
         unit_module = BasicBlockIR
         output_channel = 512
 
-        self.output_layer1 = Sequential(BatchNorm2d(output_channel), Dropout(0.2))
-        self.output_layer2 = Sequential(
-            Linear(output_channel * 7 * 7, 512), BatchNorm1d(512, affine=False)
+        self.output_layer = Sequential(
+            BatchNorm2d(output_channel),
+            Dropout(0.2),
+            Flatten(),
+            Linear(output_channel * 7 * 7, 512),
+            BatchNorm1d(512, affine=False),
         )
 
         modules = []
@@ -697,9 +700,7 @@ class BackboneMod(Module):
 
         for idx, module in enumerate(self.body):
             x = module(x)
-        x = self.output_layer1(x)
-        x = x.view(x.size(0), -1)
-        x = self.output_layer2(x)
+        x = self.output_layer(x)
         norm = torch.norm(x, 2, 1, True)
         output = torch.div(x, norm)
 
