@@ -515,7 +515,7 @@ def get_blocks(num_layers):
                 extra=True,
                 se=False,
                 kernel=3,
-                kernel_per_layer=3,
+                kernel_per_layer=1,
             ),
             get_block(
                 in_channel=64,
@@ -524,7 +524,7 @@ def get_blocks(num_layers):
                 extra=True,
                 se=False,
                 kernel=3,
-                kernel_per_layer=3,
+                kernel_per_layer=1,
             ),
         ]
         blocks2 = [
