@@ -78,7 +78,7 @@ class SEModule(Module):
 
 
 class BasicBlockIR(Module):
-    def __init__(self, in_channel, depth, stride, prelu):
+    def __init__(self, in_channel, depth, stride, prelu, se):
         super(BasicBlockIR, self).__init__()
         if in_channel == depth:
             self.shortcut_layer = MaxPool2d(1, stride)
@@ -96,7 +96,11 @@ class BasicBlockIR(Module):
             BatchNorm2d(depth),
         )
 
+        self.is_se = se
+
         self.is_prelu = prelu
+        if self.is_se:
+            self.se = SEModule(depth, 16)
         if self.is_prelu:
             self.prelu = PReLU(depth)
 
@@ -104,6 +108,8 @@ class BasicBlockIR(Module):
         shortcut = self.shortcut_layer(x)
         res = self.res_layer(x)
         result = res + shortcut
+        if self.is_se:
+            result = self.se(result)
         if self.is_prelu:
             result = self.prelu(result)
 
@@ -111,7 +117,7 @@ class BasicBlockIR(Module):
 
 
 class BottleneckIR(Module):
-    def __init__(self, in_channel, depth, stride, prelu):
+    def __init__(self, in_channel, depth, stride, prelu, se):
         super(BottleneckIR, self).__init__()
         reduction_channel = depth // 4
         if in_channel == depth:
@@ -133,6 +139,10 @@ class BottleneckIR(Module):
             BatchNorm2d(depth),
         )
         self.is_prelu = prelu
+        self.is_se = se
+
+        if self.is_se:
+            self.se = SEModule(depth, 16)
         if self.is_prelu:
             self.prelu = PReLU(depth)
 
@@ -140,6 +150,8 @@ class BottleneckIR(Module):
         shortcut = self.shortcut_layer(x)
         res = self.res_layer(x)
         result = res + shortcut
+        if self.is_se:
+            result = self.se(result)
         if self.is_prelu:
             result = self.prelu(result)
 
@@ -147,25 +159,27 @@ class BottleneckIR(Module):
 
 
 class BasicBlockIRSE(BasicBlockIR):
-    def __init__(self, in_channel, depth, stride, prelu):
+    def __init__(self, in_channel, depth, stride, prelu, se):
         super(BasicBlockIRSE, self).__init__(in_channel, depth, stride, prelu)
-        self.res_layer.add_module("se_block", SEModule(depth, 16))
+        if se:
+            self.res_layer.add_module("se_block", SEModule(depth, 16))
 
 
 class BottleneckIRSE(BottleneckIR):
-    def __init__(self, in_channel, depth, stride, prelu):
+    def __init__(self, in_channel, depth, stride, prelu, se):
         super(BottleneckIRSE, self).__init__(in_channel, depth, stride, prelu)
-        self.res_layer.add_module("se_block", SEModule(depth, 16))
+        if se:
+            self.res_layer.add_module("se_block", SEModule(depth, 16))
 
 
-class Bottleneck(namedtuple("Block", ["in_channel", "depth", "stride", "prelu"])):
+class Bottleneck(namedtuple("Block", ["in_channel", "depth", "stride", "prelu", "se"])):
     """A named tuple describing a ResNet block."""
 
 
-def get_block(in_channel, depth, num_units, prelu=False, stride=2):
+def get_block(in_channel, depth, num_units, prelu=False, stride=2, se=False):
 
-    return [Bottleneck(in_channel, depth, stride, prelu)] + [
-        Bottleneck(depth, depth, 1, prelu) for i in range(num_units - 1)
+    return [Bottleneck(in_channel, depth, stride, prelu, se)] + [
+        Bottleneck(depth, depth, 1, prelu, False) for i in range(num_units - 1)
     ]
 
 
@@ -186,9 +200,9 @@ def get_blocks(num_layers):
         ]
     elif num_layers == 50:
         blocks = [
-            get_block(in_channel=64, depth=64, num_units=3),
-            get_block(in_channel=64, depth=128, num_units=4),
-            get_block(in_channel=128, depth=256, num_units=14),
+            get_block(in_channel=64, depth=64, num_units=3, se=True),
+            get_block(in_channel=64, depth=128, num_units=4, se=True),
+            get_block(in_channel=128, depth=256, num_units=14, se=True),
             get_block(in_channel=256, depth=512, num_units=3),
         ]
     elif num_layers == 100:
@@ -276,6 +290,7 @@ class Backbone(Module):
                         bottleneck.depth,
                         bottleneck.stride,
                         bottleneck.prelu,
+                        bottleneck.se,
                     )
                 )
         self.body = Sequential(*modules)
@@ -285,7 +300,6 @@ class Backbone(Module):
         self.flip = flip
 
     def forward(self, x):
-
         if self.flip:
             x = x.flip(1)  # color channel flip
 
