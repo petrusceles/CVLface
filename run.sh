@@ -37,5 +37,5 @@ do
     # Check the exit status of the Python script
     echo "Evaluate model with index: $i"
     cd /root/workspace/CVLface/cvlface/research/recognition/code/adaface_ir50dsc_webface4m
-    python eval.py --num_gpu 1 --eval_config_name tiny --ckpt_dir ../../../../pretrained_models/recognition/adaface_ir50dsc_webface4m
+    python eval.py --num_gpu 1 --eval_config_name full --ckpt_dir ../../../../pretrained_models/recognition/adaface_ir50dsc_webface4m
 done
