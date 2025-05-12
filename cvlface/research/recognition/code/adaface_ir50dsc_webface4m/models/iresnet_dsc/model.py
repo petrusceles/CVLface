@@ -514,7 +514,7 @@ def get_blocks(num_layers):
                 num_units=3,
                 extra=True,
                 kernel=3,
-                se=True,
+                se=False,
                 kernel_per_layer=1,
             ),
             get_block(
@@ -523,13 +523,13 @@ def get_blocks(num_layers):
                 num_units=4,
                 extra=True,
                 kernel=3,
-                se=True,
+                se=False,
                 kernel_per_layer=1,
             ),
         ]
         blocks2 = [
             get_block(in_channel=128, depth=256, num_units=14, se=True),
-            get_block(in_channel=256, depth=512, num_units=3, se=True),
+            get_block(in_channel=256, depth=512, num_units=3, se=False),
         ]
     elif num_layers == 20:
         blocks1 = [
@@ -645,7 +645,7 @@ class BackboneMod(Module):
 
         self.output_layer = Sequential(
             BatchNorm2d(output_channel),
-            Dropout(0.2),
+            Dropout(0.4),
             Flatten(),
             Linear(output_channel * 7 * 7, 512),
             BatchNorm1d(512, affine=False),
