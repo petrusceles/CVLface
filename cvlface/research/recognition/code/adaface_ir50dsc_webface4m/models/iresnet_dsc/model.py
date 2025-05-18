@@ -523,7 +523,7 @@ def get_blocks(num_layers):
                 num_units=4,
                 extra=True,
                 kernel=3,
-                se=True,
+                se=False,
                 kernel_per_layer=1,
             ),
         ]
