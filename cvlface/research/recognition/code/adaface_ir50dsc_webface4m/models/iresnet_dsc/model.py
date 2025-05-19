@@ -425,10 +425,10 @@ class BasicBlockIR(Module):
         res = self.res_layer_1(x)
         res = self.res_layer_2(res)
         result = res + shortcut
-        if self.is_extra:
-            result = self.prelu(result)
         if self.se:
             result = self.se_layer(result)
+        if self.is_extra:
+            result = self.prelu(result)
         return result
 
 
@@ -523,7 +523,7 @@ def get_blocks(num_layers):
                 num_units=4,
                 extra=True,
                 kernel=3,
-                se=False,
+                se=True,
                 kernel_per_layer=1,
             ),
         ]
@@ -645,6 +645,7 @@ class BackboneMod(Module):
 
         self.output_layer = Sequential(
             BatchNorm2d(output_channel),
+            Dropout(0.4),
             Flatten(),
             Linear(output_channel * 7 * 7, 512),
             BatchNorm1d(512, affine=False),
