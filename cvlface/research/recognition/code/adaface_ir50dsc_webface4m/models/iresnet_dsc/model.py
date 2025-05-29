@@ -417,8 +417,8 @@ class BasicBlockIR(Module):
 
         if self.se:
             self.se_layer = SqueezeExcite(in_chs=depth)
-        # if self.is_extra:
-        #     self.prelu = PReLU(depth)
+        if self.is_extra:
+            self.prelu = PReLU(depth)
 
     def forward(self, x):
         shortcut = self.shortcut_layer(x)
@@ -427,8 +427,8 @@ class BasicBlockIR(Module):
         result = res + shortcut
         if self.se:
             result = self.se_layer(result)
-        # if self.is_extra:
-        #     result = self.prelu(result)
+        if self.is_extra:
+            result = self.prelu(result)
         return result
 
 
