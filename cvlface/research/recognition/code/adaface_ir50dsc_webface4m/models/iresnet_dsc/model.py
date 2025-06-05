@@ -424,9 +424,9 @@ class BasicBlockIR(Module):
         shortcut = self.shortcut_layer(x)
         res = self.res_layer_1(x)
         res = self.res_layer_2(res)
-        result = res + shortcut
         if self.se:
-            result = self.se_layer(result)
+            res = self.se_layer(res)
+        result = res + shortcut
         if self.is_extra:
             result = self.prelu(result)
         return result
